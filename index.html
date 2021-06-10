@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style/style.css">
+  <title>Document</title>
+  <link rel="stylesheet" href="style/OverlayScrollbars.css">
+  <link rel="stylesheet" href="./style/all.css">
+  <script defer src="./js/all.js"></script>
+<!--  <script src="https://use.fontawesome.com/cd01565a9b.js"></script>-->
+</head>
+<body>
+<header class="header">
+  <nav class="nav_links">
+    <a href="#logo" class="nav_item navbar_logo"><i class="fab fa-apple"></i></a>
+    <a href="#main" class="nav_item">iPhone</a>
+    <a href="#ipad" class="nav_item">iPad</a>
+    <a href="#mac" class="nav_item">iMac</a>
+    <a href="#watch" class="nav_item">Watch</a>
+    <a href="#Airpod" class="nav_item">Airpods</a>
+  </nav>
+</header>
+<div class="logo" id="logo">
+  <h1 class="title_big">Apple</h1>
+  <div class="logo_content"></div>
+  <div class="scroll_donw">
+    <a href="#main" class="nav_item arrow_item">
+      <i class="fas fa-angle-down arrow1"></i>
+    </a>
+
+  </div>
+</div>
+<main class="main" id="main">
+  <div class="main_title">
+    <p class="description">iPhone 12 pro</p>
+  </div>
+
+  <div class="container"></div>
+</main>
+<div class="ipad" id="ipad">
+  <div class="main_title">
+    <p class="description">Apple iPad Pro</p>
+  </div>
+  <div class="ipad_content"></div>
+</div>
+
+<div class="mac" id="mac">
+  <div class="main_title">
+    <p class="description">iMac</p>
+  </div>
+  <div class="mac_content"></div>
+</div>
+
+<div class="watch" id="watch">
+  <div class="main_title">
+    <p class="description">Apple Watch</p>
+  </div>
+  <div class="watch_content"></div>
+</div>
+
+<div class="airpod" id="Airpod">
+  <div class="main_title">
+    <p class="description">Airpods</p>
+  </div>
+  <div class="airpod_content"></div>
+</div>
+
+
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="three.js"></script>
+<script type="module">
+  $(document).ready(function () {
+    $(".nav_item").click(function () {
+      console.log('axsxasxasxasx')
+        var elementClick = $(this).attr("href");
+        var destination = $(elementClick).offset().top;
+            $('html').animate({ scrollTop: destination }, 1100);
+        return false; 
+    });
+});
+    var obj1 = {
+        'img':'./model/scene.gltf',
+        'area':document.querySelector('.container'),
+        'objectSize':25,
+        'innerWidth': 500,
+        'innerHeigh': 400,
+        'positionZ': 250,
+        'positionY': 10,
+        'positionX': 200,
+        'THREEColor':'#262626',
+        'rendSizeW':500,
+        'rendSizeH':400,
+    };
+    var obj2 = {
+        'img':'./model1/scene.gltf',
+        'area':document.querySelector('.ipad_content'),
+        'objectSize':10,
+        'innerWidth': 700,
+        'innerHeigh': 800,
+        'positionZ': -500,
+        'positionY': -1000,
+        'positionX':-100,
+        'THREEColor':'#262626',
+        'rendSizeW':700,
+        'rendSizeH':800,
+    };
+    var obj3 = {
+        'img':'./model2/scene.gltf',
+        'area':document.querySelector('.mac_content'),
+        'objectSize':1,
+        'innerWidth': 800,
+        'innerHeigh': 700,
+        'positionZ': 50,
+        'positionY': 50,
+        'positionX': 50,
+        'THREEColor':'#262626',
+        'rendSizeW':800,
+        'rendSizeH':700,
+    };
+    var obj4 = {
+        'img':'./model3/scene.gltf',
+        'area':document.querySelector('.watch_content'),
+        'objectSize':85,
+        'innerWidth': 800,
+        'innerHeigh': 700,
+        'positionZ': 50,
+        'positionY': 50,
+        'positionX': 50,
+        'THREEColor':'#262626',
+        'rendSizeW':800,
+        'rendSizeH':700,
+    };
+    var obj5 = {
+        'img':'./model4/scene.gltf',
+        'area':document.querySelector('.airpod_content'),
+        'objectSize':55,
+        'innerWidth': 800,
+        'innerHeigh': 700,
+        'positionZ': 50,
+        'positionY': 50,
+        'positionX': 0,
+        'THREEColor':'#262626',
+        'rendSizeW':800,
+        'rendSizeH':700,
+    };
+ var obj6 = {
+        'img':'./model5/scene.gltf',
+        'area':document.querySelector('.logo_content'),
+        'objectSize':10,
+        'innerWidth': window.innerWidth,
+        'innerHeigh': window.innerHeight,
+        'positionZ': 150,
+        'positionY': -15,
+        'positionX': 0,
+        'THREEColor':'#262626',
+        'rendSizeW':window.innerWidth,
+        'rendSizeH': window.innerHeight,
+    };
+
+
+    import {OrbitControls} from 'https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/controls/OrbitControls.js'
+    import {GLTFLoader} from './three.js-master/examples/jsm/loaders/GLTFLoader.js'
+
+
+    function init(content,img) {
+        console.log(content['img']);
+        //Scene
+        let camera;
+        let renderer;
+        let scene = new THREE.Scene();
+        scene.background = new THREE.Color(content.THREEColor);
+
+        //Camera
+        camera = new THREE.PerspectiveCamera(content.objectSize, content.innerWidth / content.innerHeigh, 0.1, 3000);
+        camera.position.z = content.positionZ;
+        camera.position.y = content.positionY;
+        camera.position.x = content.positionX;
+
+        //render
+        renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setSize(content.rendSizeW, content.rendSizeH);
+        content.area.appendChild(renderer.domElement);
+
+        //OrbitControls
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.update();
+        controls.enableDamping = true;
+        controls.minDistance = 40;
+
+        //light
+        const ambient = new THREE.AmbientLight(0xffffff, 1);
+        scene.add(ambient);
+
+        let light = new THREE.PointLight(0xc4c4c4, 1);
+        light.position.set(0, 300, 500);
+        scene.add(light);
+
+        let light2 = new THREE.PointLight(0xc4c4c4, 1);
+        light2.position.set(500, 300, 500);
+        scene.add(light2);
+
+        let light3 = new THREE.PointLight(0xc4c4c4, 1);
+        light3.position.set(0, 300, -500);
+        scene.add(light3);
+
+        let light4 = new THREE.PointLight(0xc4c4c4, 1);
+        light4.position.set(-500, 300, 500);
+        scene.add(light4);
+
+        //model
+        const loader = new GLTFLoader();
+
+        loader.load(img, onLoad);
+        function onLoad( gltf ) {
+            console.log( gltf );
+            scene.add( gltf.scene );
+        }
+
+        //Resize
+        window.addEventListener('resize', onWindowResize, false);
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(content.rendSizeW, content.rendSizeH)
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera)
+        }
+        animate()
+    }
+
+
+
+//  scroll
+    // document.addEventListener("DOMContentLoaded", function() {
+    //     OverlayScrollbars(document.querySelectorAll("body"), { });
+    // });
+
+    init(obj1,obj1.img);
+    init(obj2,obj2.img);
+    init(obj3,obj3.img);
+    init(obj4,obj4.img);
+    init(obj5,obj5.img);
+    init(obj6,obj6.img);
+    //initTwo();
+</script>
+<script src="js/OverlayScrollbars.js"></script>
+</body>
+</html>
